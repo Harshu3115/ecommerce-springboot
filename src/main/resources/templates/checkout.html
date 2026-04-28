@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Checkout | VogueHub</title>
+  <link rel="icon" type="image/png" href="/images/favicon2.png">
+  <!-- Bootstrap 5 CSS + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #faf5ff 0%, #fff5f5 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    :root {
+      --primary-purple: #6c5ce7;
+      --primary-dark: #5a4bcf;
+      --coral: #ff7675;
+      --coral-light: #ff9f9e;
+      --accent-mint: #00cec9;
+    }
+    /* Navbar styling */
+    
+    /* ========== NAVBAR STYLES ========== */
+    /* ========== NAVBAR STYLES ========== */
+    .navbar {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 25px rgba(108, 92, 231, 0.08);
+      
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      padding: 0;
+    }
+    
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      position: relative;
+    }
+    
+    /* Logo */
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+      z-index: 1001;
+    }
+    
+    .logo:hover {
+      transform: scale(1.02);
+    }
+    
+    .logo-img {
+      height: 55px;
+      width: auto;
+      object-fit: contain;
+    }
+    
+    .logo-text {
+      font-weight: 800;
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    
+    /* Hamburger Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+      padding: 0;
+    }
+    
+    .hamburger span {
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+    
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+    }
+    
+    /* Navigation Links */
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-links li a {
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #4a5568;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 0.5rem 0;
+      display: inline-block;
+    }
+    
+    .nav-links li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+    
+    .nav-links li a:hover {
+      color: #6c5ce7;
+    }
+    
+    .nav-links li a:hover::after {
+      width: 100%;
+    }
+    
+    /* Right Side Icons */
+    .nav-icons {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-icon {
+      position: relative;
+      font-size: 1.3rem;
+      color: #6c5ce7;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.3rem;
+    }
+    
+    .nav-icon:hover {
+      color: #ff7675;
+      transform: translateY(-2px);
+    }
+    
+    .icon-label {
+      display: none;
+      font-size: 0.75rem;
+      margin-left: 0.3rem;
+    }
+    
+    /* Cart Badge */
+    .cart-icon {
+      position: relative;
+    }
+    
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      background: linear-gradient(135deg, #ff7675, #ff9f9e);
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    /* Profile Dropdown */
+    .profile-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .profile-icon {
+      font-size: 1.3rem;
+      color: #6c5ce7;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 0.3rem;
+    }
+    
+    .profile-icon:hover {
+      color: #ff7675;
+      transform: translateY(-2px);
+    }
+    
+    .dropdown-content {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      background: white;
+      min-width: 220px;
+      border-radius: 16px;
+      box-shadow: 0 12px 35px rgba(108, 92, 231, 0.15);
+      padding: 0.6rem 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      border: 1px solid #f0e4ff;
+    }
+    
+    .profile-dropdown:hover .dropdown-content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .dropdown-content a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 1.2rem;
+      text-decoration: none;
+      color: #4a5568;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    
+    .dropdown-content a i {
+      font-size: 1.1rem;
+      width: 22px;
+      color: #6c5ce7;
+      transition: all 0.2s ease;
+    }
+    
+    .dropdown-content a:hover {
+      background: #f8f4ff;
+      color: #6c5ce7;
+    }
+    
+    .dropdown-content a:hover i {
+      color: #ff7675;
+      transform: translateX(3px);
+    }
+    
+    .dropdown-divider {
+      margin: 0.5rem 0;
+      border: none;
+      border-top: 1px solid #f0e8ff;
+    }
+    
+    .logout-link {
+      color: #e74c3c !important;
+    }
+    
+    .logout-link i {
+      color: #e74c3c !important;
+    }
+    
+    .logout-link:hover {
+      background: #fff5f5 !important;
+      color: #c0392b !important;
+    }
+    
+ /* ========== RESPONSIVE DESIGN ========== */
+    @media (max-width: 1024px) {
+      .nav-container {
+        padding: 0.75rem 1.5rem;
+      }
+      
+      .nav-links {
+        gap: 1.5rem;
+      }
+      
+      .nav-icons {
+        gap: 1rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding-bottom: 70px;
+      }
+      
+      .nav-container {
+        padding: 0.8rem 1rem;
+      }
+      
+      /* Show Hamburger Menu */
+      .hamburger {
+        display: flex;
+      }
+      
+      /* Mobile Menu Styles */
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: left 0.3s ease;
+        z-index: 1000;
+        padding: 2rem;
+      }
+      
+      .nav-links.active {
+        left: 0;
+      }
+      
+      .nav-links li a {
+        font-size: 1.2rem;
+        padding: 0.5rem;
+      }
+      
+      /* Mobile Icons Bar */
+      .nav-icons {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: white;
+        justify-content: space-around;
+        padding: 0.8rem 1rem;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        z-index: 999;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        gap: 0;
+      }
+      
+      .nav-icons.active {
+        transform: translateY(0);
+      }
+      
+      .nav-icon {
+        flex-direction: column;
+        font-size: 1.2rem;
+        gap: 0.2rem;
+      }
+      
+      .icon-label {
+        display: block;
+        font-size: 0.7rem;
+      }
+      
+      .cart-badge {
+        top: -5px;
+        right: -5px;
+        width: 16px;
+        height: 16px;
+        font-size: 0.6rem;
+      }
+      
+      /* Profile Dropdown on Mobile */
+      .profile-dropdown {
+        position: static;
+      }
+      
+      .profile-icon {
+        flex-direction: column;
+      }
+      
+      .dropdown-content {
+        position: fixed;
+        background: white;
+        bottom: 70px;
+        right: 10px;
+        left: auto;
+        /* top: auto; */
+        min-width: 200px;
+        height: 220px;
+      }
+      
+      /* Hero Section Mobile */
+      .hero-section {
+        padding: 2rem 1rem;
+        border-radius: 0 0 1.5rem 1.5rem;
+      }
+      
+      .hero-title {
+        font-size: 2.2rem;
+      }
+      
+      .section-title {
+        font-size: 1.6rem;
+      }
+      
+      .product-img {
+        height: 200px;
+      }
+      
+      .products-wrapper {
+        padding: 0 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .logo-text {
+        font-size: 1.4rem;
+      }
+      
+      .logo-img {
+        height: 45px;
+      }
+      
+      .hero-title {
+        font-size: 1.8rem;
+      }
+      
+      .dropdown-content {
+        min-width: 180px;
+        bottom: 65px;
+      }
+      
+      .dropdown-content a {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+      }
+    }
+    
+    @media (min-width: 1200px) {
+      .nav-container {
+        padding: 0.75rem 2rem;
+      }
+      
+      .hero-title {
+        font-size: 3.5rem;
+      }
+    }
+    
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    
+    /* Focus Styles */
+    .nav-links li a:focus-visible,
+    .nav-icon:focus-visible,
+    .profile-icon:focus-visible,
+    .hamburger:focus-visible,
+    .btn-primary-custom:focus-visible,
+    .btn-outline-custom:focus-visible {
+      outline: 2px solid #6c5ce7;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }    
+    /* Focus Styles */
+    .nav-links li a:focus-visible,
+    .nav-icon:focus-visible,
+    .profile-icon:focus-visible,
+    .hamburger:focus-visible,
+    .btn-primary-custom:focus-visible,
+    .btn-outline-custom:focus-visible {
+      outline: 2px solid #6c5ce7;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+    .cart-badge {
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      color: white;
+      border-radius: 30px;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin-left: 5px;
+    }
+    /* Checkout Hero */
+    .checkout-hero {
+      background: linear-gradient(120deg, #f0f9ff 0%, #fff0f5 100%);
+      border-radius: 0 0 2rem 2rem;
+      padding: 1.8rem 1rem;
+      margin-bottom: 2rem;
+    }
+    .checkout-title {
+      font-weight: 800;
+      font-size: 2rem;
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    /* Form Styles */
+    .checkout-form {
+      background: white;
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(108, 92, 231, 0.08);
+      border: 1px solid #f0e4ff;
+    }
+    .form-section {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #f0e8ff;
+    }
+    .form-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .section-title {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #1e293b;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .section-title i {
+      color: #e65c1e;
+      font-size: 1.3rem;
+    }
+    .form-label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #4a5568;
+      margin-bottom: 0.4rem;
+    }
+    .form-control, .form-select {
+      border-radius: 12px;
+      border: 1px solid #e2d5ff;
+      padding: 0.7rem 1rem;
+      transition: all 0.2s;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: #6c5ce7;
+      box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+      outline: none;
+    }
+    /* Order Summary Card */
+    .order-summary {
+      background: white;
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(108, 92, 231, 0.08);
+      border: 1px solid #f0e4ff;
+      position: sticky;
+      top: 100px;
+    }
+    .summary-title {
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #1e293b;
+      border-bottom: 2px solid #f0e4ff;
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .cart-item-checkout {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #f5edff;
+    }
+    .cart-item-img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+    .cart-item-details {
+      flex: 1;
+    }
+    .cart-item-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #1e293b;
+      margin-bottom: 0.2rem;
+    }
+    .cart-item-price {
+      font-size: 0.8rem;
+      color: #e65c1e;
+      font-weight: 600;
+    }
+    .cart-item-quantity {
+      font-size: 0.7rem;
+      color: #94a3b8;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+      color: #4a5568;
+    }
+    .summary-total {
+      border-top: 2px dashed #e2d5ff;
+      padding-top: 1rem;
+      margin-top: 0.5rem;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #e65c1e;
+    }
+    /* Payment Methods */
+    .payment-method {
+      border: 2px solid #f0e4ff;
+      border-radius: 16px;
+      padding: 1rem;
+      margin-bottom: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .payment-method:hover {
+      border-color: #6c5ce7;
+      background: #faf7ff;
+    }
+    .payment-method input[type="radio"] {
+      margin-right: 0.75rem;
+      accent-color: #6c5ce7;
+    }
+    .payment-method label {
+      font-weight: 600;
+      color: #1e293b;
+      cursor: pointer;
+    }
+    /* Place Order Button */
+    .place-order-btn {
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      border: none;
+      border-radius: 50px;
+      padding: 1rem;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.3s;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      width: 100%;
+      margin-top: 1.5rem;
+    }
+    .place-order-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+      background: linear-gradient(135deg, #5a4bcf, #ff6b6a);
+      color: white;
+    }
+    /* Trust Badges */
+    .trust-badge {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      text-align: center;
+      font-size: 0.7rem;
+      color: #6c5ce7;
+    }
+    .trust-item i {
+      font-size: 1.2rem;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    /* Footer */
+    .footer {
+      background: linear-gradient(135deg, #2d2b3a, #1e1b2a);
+      color: #e2e0f0;
+      margin-top: 4rem;
+      padding: 3rem 0 2rem;
+      width: 100%;
+    }
+    @media (max-width: 768px) {
+      .checkout-form {
+        padding: 1.2rem;
+      }
+      .order-summary {
+        margin-top: 1.5rem;
+      }
+      .checkout-title {
+        font-size: 1.6rem;
+      }
+    }
+    /* Radio group styling */
+    .form-check-input:checked {
+      background-color: #6c5ce7;
+      border-color: #6c5ce7;
+    }
+    hr {
+      background-color: #e9e0ff;
+    }
+    .back-to-cart {
+      color: #6c5ce7;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    .back-to-cart:hover {
+      color: #ff7675;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======================= NAVBAR ======================= -->
+<nav class="navbar">
+  <div class="nav-container">
+
+    <!-- Logo -->
+    <a href="/home" class="logo">
+      <img src="/images/brand.png" alt="VogueHub" class="logo-img">
+    </a>
+
+    <!-- Hamburger -->
+    <button class="hamburger" id="hamburgerBtn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Links -->
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/home">Home</a></li>
+      <li><a href="/home#products">Shop</a></li> <!-- ✅ FIXED -->
+      <li><a href="#">Trending</a></li>
+      <li><a href="#">New Arrivals</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+
+    <!-- Icons -->
+    <div class="nav-icons" id="navIcons">
+
+      <!-- Wishlist -->
+      <a href="/watchlist" class="nav-icon">
+        <i class="bi bi-heart"></i>
+        <span class="icon-label">Wishlist</span>
+      </a>
+
+      <!-- Cart -->
+      <a href="/cart/view" class="nav-icon cart-icon">
+        <i class="bi bi-bag"></i>
+        <span class="cart-badge" th:text="${cartCount}">0</span> <!-- ✅ DYNAMIC -->
+        <span class="icon-label">Cart</span>
+      </a>
+
+      <!-- Orders -->
+      <a href="/orders" class="nav-icon">
+        <i class="bi bi-box-seam"></i>
+        <span class="icon-label">Orders</span>
+      </a>
+
+      <!-- Profile -->
+      <div class="profile-dropdown">
+        <a href="#" class="profile-icon">
+          <i class="bi bi-person-circle"></i>
+          <span class="icon-label">Profile</span>
+        </a>
+
+        <div class="dropdown-content">
+          <a href="/profile">My Profile</a>
+          <a href="/orders">My Orders</a>
+          <a href="/watchlist">Wishlist</a>
+          <hr>
+          <a href="/logout" class="logout-link">Logout</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<!-- ======================= CHECKOUT HEADER ======================= -->
+<div class="checkout-hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <span class="badge mb-2 px-3 py-2 rounded-pill" style="background: rgba(108,92,231,0.12); color:#6c5ce7;"><i class="bi bi-credit-card-2-front me-1"></i> Secure Checkout</span>
+        <h1 class="checkout-title">Complete Your Order <i class="bi bi-bag-check" style="font-size: 1.8rem; color:#ff7675;"></i></h1>
+        <p class="text-muted mt-2">Please review your order and fill in the details below. We value your style!</p>
+      </div>
+      <div class="col-md-4 text-md-end mt-3 mt-md-0">
+        <a href="/cart" class="back-to-cart"><i class="bi bi-arrow-left-short"></i> Back to Cart</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= CHECKOUT MAIN CONTENT ======================= -->
+<div class="container mb-5">
+  <div class="row g-4">
+    <!-- Left Column - Checkout Form (NO JavaScript) -->
+    <div class="col-lg-7">
+      <form action="/placeOrder" method="POST" class="checkout-form">
+        <!-- Contact Information -->
+        <div class="form-section">
+          <div class="section-title">
+            <i class="bi bi-envelope-paper"></i>
+            <span>Contact Information</span>
+          </div>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Email Address *</label>
+              <input type="email" class="form-control" name="email" th:value="${user != null ? user.email : ''}" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Phone Number *</label>
+              <input type="tel" class="form-control" name="phone" th:value="${user != null ? user.phone : ''}"required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shipping Address -->
+        <div class="form-section">
+          <div class="section-title">
+            <i class="bi bi-geo-alt"></i>
+            <span>Shipping Address</span>
+          </div>
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label">Full Name *</label>
+              <input type="text" class="form-control" name="fullname" th:value="${user != null ? user.name : ''}" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Street Address *</label>
+              <input type="text" class="form-control" name="address" value="42, Fashion Avenue, Andheri East" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">City *</label>
+              <input type="text" class="form-control" name="city" value="Mumbai" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">State *</label>
+              <select class="form-select" name="state" required>
+                <option value="Maharashtra" selected>Maharashtra</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="West Bengal">West Bengal</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">PIN Code *</label>
+              <input type="text" class="form-control" name="pincode" value="400101" required>
+            </div>
+          </div>
+          <div class="mt-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="saveAddress">
+              <label class="form-check-label small" for="saveAddress">
+                Save this address for future orders
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delivery Options -->
+        <div class="form-section">
+          <div class="section-title">
+            <i class="bi bi-truck"></i>
+            <span>Delivery Options</span>
+          </div>
+          <div class="payment-method" style="cursor: default;">
+            <input type="radio" name="delivery" id="standard" value="standard" checked>
+            <label for="standard"><strong>Standard Delivery</strong> - Free</label>
+            <p class="small text-muted ms-4 mt-1 mb-0">Estimated delivery: 5-7 business days</p>
+          </div>
+          <div class="payment-method" style="cursor: default;">
+            <input type="radio" name="delivery" id="express" value="express">
+            <label for="express"><strong>Express Delivery</strong> - ₹99</label>
+            <p class="small text-muted ms-4 mt-1 mb-0">Estimated delivery: 2-3 business days</p>
+          </div>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="form-section">
+          <div class="section-title">
+            <i class="bi bi-credit-card"></i>
+            <span>Payment Method</span>
+          </div>
+          <div class="payment-method">
+            <input type="radio" name="payment" id="card" value="card" checked>
+            <label for="card"><strong>Credit / Debit Card</strong> <i class="bi bi-visa ms-2"></i> <i class="bi bi-mastercard"></i> <i class="bi bi-credit-card"></i></label>
+            <div class="row g-2 mt-2 ms-4">
+              <div class="col-md-6">
+                <input type="text" class="form-control form-control-sm" placeholder="Card Number" value="4242 4242 4242 4242">
+              </div>
+              <div class="col-md-3">
+                <input type="text" class="form-control form-control-sm" placeholder="MM/YY" value="12/28">
+              </div>
+              <div class="col-md-3">
+                <input type="text" class="form-control form-control-sm" placeholder="CVV" value="123">
+              </div>
+            </div>
+          </div>
+          <div class="payment-method">
+            <input type="radio" name="payment" id="upi" value="upi">
+            <label for="upi"><strong>UPI / Google Pay / PhonePe</strong></label>
+            <div class="mt-2 ms-4">
+              <input type="text" class="form-control form-control-sm" placeholder="Enter UPI ID (e.g., name@okhdfcbank)" value="voguehub@okhdfcbank">
+            </div>
+          </div>
+          <div class="payment-method">
+            <input type="radio" name="payment" id="cod" value="cod">
+            <label for="cod"><strong>Cash on Delivery</strong> <span class="badge bg-warning text-dark ms-2">Available</span></label>
+            <p class="small text-muted ms-4 mt-1 mb-0">Pay when your order arrives. COD available for orders below ₹10,000.</p>
+          </div>
+          <div class="payment-method">
+            <input type="radio" name="payment" id="netbanking" value="netbanking">
+            <label for="netbanking"><strong>Net Banking</strong></label>
+            <select class="form-select form-select-sm mt-2 ms-4 w-75">
+              <option>HDFC Bank</option>
+              <option>ICICI Bank</option>
+              <option>SBI</option>
+              <option>Axis Bank</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Order Notes -->
+        <div class="form-section">
+          <div class="section-title">
+            <i class="bi bi-pencil-square"></i>
+            <span>Order Notes (Optional)</span>
+          </div>
+          <textarea class="form-control" rows="3" placeholder="Special instructions for delivery, gift message, etc.">Please leave the package at the security gate. Thank you!</textarea>
+        </div>
+
+        <!-- Place Order Button -->
+        <button type="submit" class="place-order-btn">
+          <i class="bi bi-lock-fill me-2"></i> Place Order · ₹<span th:text="${finalTotal}"></span>
+        </button>
+        
+        <!-- Security Note -->
+        <div class="text-center mt-3">
+          <small class="text-muted"><i class="bi bi-shield-check"></i> Your payment information is encrypted and secure</small>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right Column - Order Summary -->
+    <div class="col-lg-5">
+      <div class="order-summary">
+        <h3 class="summary-title"><i class="bi bi-receipt"></i> Order Summary</h3>
+        
+        <!-- Cart Items (Static) -->
+        <div th:each="p : ${products}" class="cart-item-checkout">
+
+  <img th:src="${p.image}" class="cart-item-img">
+
+  <div class="cart-item-details">
+    <div class="cart-item-name" th:text="${p.name}"></div>
+    <div class="cart-item-price">₹<span th:text="${p.price}"></span></div>
+    <div class="cart-item-quantity">
+      Qty: <span th:text="${quantities[p.id]}"></span>
+    </div>
+  </div>
+
+  <div class="fw-semibold" style="color:#e65c1e;">
+    ₹<span th:text="${p.price * quantities[p.id]}"></span>
+  </div>
+
+</div>
+        
+        <hr class="my-3">
+        
+        <!-- Price Breakdown -->
+        <div class="summary-row">
+  <span>Subtotal</span>
+  <span>₹<span th:text="${total}"></span></span>
+</div>
+
+<div class="summary-row">
+  <span>Shipping</span>
+  <span class="text-success">Free</span>
+</div>
+
+<div class="summary-row">
+  <span>Discount</span>
+  <span class="text-danger">
+    - ₹<span th:text="${discountAmount}"></span>
+  </span>
+</div>
+
+<div class="summary-total d-flex justify-content-between">
+  <span><strong>Total Amount</strong></span>
+  <span class="fs-4 fw-bold">
+    ₹<span th:text="${finalTotal}"></span>
+  </span>
+</div>
+        
+      
+        <!-- Coupon Applied Badge -->
+        <div class="mt-3 p-2 bg-light rounded-3 text-center" style="background: #f8f4ff !important;">
+          <i class="bi bi-tag-fill text-success"></i>
+          <span class="small fw-semibold">Coupon "VOGUE10" applied | Saved ₹1,589</span>
+        </div>
+        
+        <!-- Delivery ETA Note -->
+        <div class="mt-3 pt-2 border-top">
+          <div class="d-flex gap-2 align-items-center">
+            <i class="bi bi-clock-history" style="color:#6c5ce7;"></i>
+            <small class="text-muted">Order before 8 PM for same-day dispatch</small>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Trust Badges -->
+      <div class="trust-badge mt-4">
+        <div class="trust-item">
+          <i class="bi bi-shield-check"></i>
+          <span>Secure Checkout</span>
+        </div>
+        <div class="trust-item">
+          <i class="bi bi-arrow-repeat"></i>
+          <span>30-Day Returns</span>
+        </div>
+        <div class="trust-item">
+          <i class="bi bi-headset"></i>
+          <span>24/7 Support</span>
+        </div>
+      </div>
+      
+      <!-- Accepted Payment Icons -->
+      <div class="text-center mt-3 p-3 bg-white rounded-4 border" style="border-color: #f0e4ff !important;">
+        <p class="small text-muted mb-2">We Accept</p>
+        <div class="d-flex justify-content-center gap-3 fs-3">
+          <i class="bi bi-credit-card" style="color:#6c5ce7;"></i>
+          <i class="bi bi-paypal" style="color:#6c5ce7;"></i>
+          <i class="bi bi-google-play" style="color:#6c5ce7;"></i>
+          <span style="font-weight: 700; font-size: 0.9rem;">UPI</span>
+          <span style="font-weight: 600;">COD</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="footer">
+  <div class="container-fluid px-5">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <h5 class="mb-3" style="color: #ff7675; font-weight: 700;">VogueHub</h5>
+        <p style="color: #b9b5d4;">Your ultimate destination for curated fashion, timeless accessories, and trend-forward styles.</p>
+        <div class="d-flex gap-3 mt-3">
+          <i class="bi bi-instagram fs-5" style="cursor: pointer; color:#ff7675;"></i>
+          <i class="bi bi-twitter-x fs-5" style="cursor: pointer; color:#ff7675;"></i>
+          <i class="bi bi-facebook fs-5" style="cursor: pointer; color:#ff7675;"></i>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <h6 style="color: #ff7675;">Shop</h6>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">Women</a></li>
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">Men</a></li>
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">Accessories</a></li>
+        </ul>
+      </div>
+      <div class="col-md-2">
+        <h6 style="color: #ff7675;">Support</h6>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">FAQs</a></li>
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">Returns</a></li>
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">Shipping</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h6 style="color: #ff7675;">Get 20% off</h6>
+        <div class="input-group mt-2">
+          <input type="email" class="form-control rounded-pill rounded-end-0" placeholder="Your email">
+          <button class="btn rounded-pill rounded-start-0" style="background: linear-gradient(135deg, #6c5ce7, #ff7675); color:white;">Subscribe</button>
+        </div>
+      </div>
+    </div>
+    <hr class="mt-4" style="background: #4a3f6e;">
+    <div class="text-center small">© 2025 VogueHub — Fashion for the fearless</div>
+  </div>
+</footer>
+
+<!-- Bootstrap JS only for responsive navbar toggle (no checkout functionality JS) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- No custom JavaScript - pure static checkout page -->
+
+
+<script type="text/javascript">
+//Hamburger Menu Toggle
+const hamburger = document.getElementById("hamburgerBtn");
+const navLinks = document.getElementById("navLinks");
+const navIcons = document.getElementById("navIcons");
+
+if (hamburger) {
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    navLinks.classList.toggle("active");
+    navIcons.classList.toggle("active");
+  });
+}
+
+// Close menu when clicking on a link
+document.querySelectorAll('.nav-links a, .nav-icons a:not(.profile-dropdown a)').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    navLinks.classList.remove('active');
+    navIcons.classList.remove('active');
+  });
+});
+</script>
+</body>
+</html>

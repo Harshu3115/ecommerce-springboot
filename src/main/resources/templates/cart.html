@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Shopping Cart | VogueHub</title>
+  <link rel="icon" type="image/png" href="/images/favicon2.png">
+  <!-- Bootstrap 5 CSS + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #faf5ff 0%, #fff5f5 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    :root {
+      --primary-purple: #6c5ce7;
+      --primary-dark: #5a4bcf;
+      --coral: #ff7675;
+      --coral-light: #ff9f9e;
+      --accent-mint: #00cec9;
+      --soft-lavender: #a29bfe;
+    }
+
+    .cart-badge {
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      color: white;
+      border-radius: 30px;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin-left: 5px;
+    }
+    /* Cart Hero Section */
+    .cart-hero {
+      background: linear-gradient(120deg, #fff9f0 0%, #fff0f5 100%);
+      border-radius: 0 0 2.5rem 2.5rem;
+      padding: 2rem 1rem;
+      margin-bottom: 2rem;
+    }
+    .cart-title {
+      font-weight: 800;
+      font-size: 2.2rem;
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    /* Cart Table Styles */
+    .cart-table {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(108, 92, 231, 0.08);
+      border: 1px solid #f0e4ff;
+    }
+    .cart-table thead {
+      background: linear-gradient(135deg, #f8f3ff, #fff5f0);
+    }
+    .cart-table th {
+      font-weight: 700;
+      color: #4a3f6e;
+      border-bottom: 2px solid #e6d9ff;
+      padding: 1.2rem 1rem;
+      font-size: 0.9rem;
+    }
+    .cart-table td {
+      vertical-align: middle;
+      padding: 1.2rem 1rem;
+      border-bottom: 1px solid #f0e8ff;
+    }
+    .product-img-cart {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .product-name-cart {
+      font-weight: 700;
+      color: #1e293b;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+    .product-category-cart {
+      font-size: 0.7rem;
+      color: #e65c1e;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .price-cart {
+      font-weight: 800;
+      color: #1e3c72;
+      font-size: 1.1rem;
+    }
+    .old-price-cart {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      text-decoration: line-through;
+      margin-left: 6px;
+    }
+    .quantity-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #f8f4ff;
+      padding: 6px 12px;
+      border-radius: 50px;
+    }
+    .quantity-btn {
+      background: white;
+      border: 1px solid #e0d0ff;
+      color: #6c5ce7;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+    .quantity-btn:hover {
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      color: white;
+      border-color: transparent;
+    }
+    .quantity-number {
+      font-weight: 700;
+      color: #2d3a5e;
+      min-width: 24px;
+      text-align: center;
+    }
+    .remove-link {
+      color: #ff7675;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    .remove-link:hover {
+      color: #d9534f;
+      text-decoration: underline;
+    }
+    /* Order Summary Card */
+    .summary-card {
+      background: white;
+      border-radius: 24px;
+      padding: 1.8rem;
+      box-shadow: 0 10px 30px rgba(108, 92, 231, 0.08);
+      border: 1px solid #f0e4ff;
+      position: sticky;
+      top: 100px;
+    }
+    .summary-title {
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: #1e293b;
+      border-bottom: 2px solid #f0e4ff;
+      padding-bottom: 0.75rem;
+      margin-bottom: 1.2rem;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+      color: #4a5568;
+    }
+    .summary-total {
+      border-top: 2px dashed #e2d5ff;
+      padding-top: 1rem;
+      margin-top: 0.5rem;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: #e65c1e;
+    }
+    .checkout-btn {
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      border: none;
+      border-radius: 50px;
+      padding: 0.9rem;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.3s;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      margin-top: 1.5rem;
+    }
+    .checkout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+      background: linear-gradient(135deg, #5a4bcf, #ff6b6a);
+      color: white;
+    }
+    .continue-shopping {
+      display: inline-block;
+      color: #6c5ce7;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 1rem;
+      transition: 0.2s;
+    }
+    .continue-shopping:hover {
+      color: #ff7675;
+      transform: translateX(-4px);
+    }
+    /* Empty cart state */
+    .empty-cart {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: white;
+      border-radius: 2rem;
+      box-shadow: 0 15px 35px rgba(108, 92, 231, 0.08);
+    }
+    /* Footer */
+    .footer {
+      background: linear-gradient(135deg, #2d2b3a, #1e1b2a);
+      color: #e2e0f0;
+      margin-top: 4rem;
+      padding: 3rem 0 2rem;
+      width: 100%;
+    }
+    /* coupon input */
+    .coupon-input {
+      border-radius: 50px;
+      border: 1px solid #e0d5ff;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+    }
+    .apply-btn {
+      background: #f0e6ff;
+      border: none;
+      border-radius: 50px;
+      padding: 0.6rem 1.2rem;
+      font-weight: 600;
+      color: #6c5ce7;
+      transition: 0.2s;
+    }
+    .apply-btn:hover {
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .cart-table thead {
+        display: none;
+      }
+      .cart-table, .cart-table tbody, .cart-table tr, .cart-table td {
+        display: block;
+        width: 100%;
+      }
+      .cart-table tr {
+        margin-bottom: 1rem;
+        border: 1px solid #f0e4ff;
+        border-radius: 20px;
+        padding: 1rem;
+        background: white;
+      }
+      .cart-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.6rem 0;
+        border: none;
+      }
+      .cart-table td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: #6c5ce7;
+        margin-right: 1rem;
+      }
+      .product-img-cart {
+        width: 60px;
+        height: 60px;
+      }
+      .summary-card {
+        margin-top: 1.5rem;
+      }
+    }
+    .btn-primary-custom {
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      border: none;
+      border-radius: 50px;
+      padding: 0.7rem 2rem;
+      font-weight: 600;
+      color: white;
+      text-decoration: none;
+      display: inline-block;
+      transition: 0.3s;
+    }
+    .btn-primary-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+      color: white;
+    }
+    
+    
+    /* ========== NAVBAR STYLES ========== */
+    /* ========== NAVBAR STYLES ========== */
+    .navbar {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 25px rgba(108, 92, 231, 0.08);
+      
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      padding: 0;
+    }
+    
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      position: relative;
+    }
+    
+    /* Logo */
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+      z-index: 1001;
+    }
+    
+    .logo:hover {
+      transform: scale(1.02);
+    }
+    
+    .logo-img {
+      height: 55px;
+      width: auto;
+      object-fit: contain;
+    }
+    
+    .logo-text {
+      font-weight: 800;
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    
+    /* Hamburger Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+      padding: 0;
+    }
+    
+    .hamburger span {
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+    
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+    }
+    
+    /* Navigation Links */
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-links li a {
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #4a5568;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 0.5rem 0;
+      display: inline-block;
+    }
+    
+    .nav-links li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+    
+    .nav-links li a:hover {
+      color: #6c5ce7;
+    }
+    
+    .nav-links li a:hover::after {
+      width: 100%;
+    }
+    
+    /* Right Side Icons */
+    .nav-icons {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-icon {
+      position: relative;
+      font-size: 1.3rem;
+      color: #6c5ce7;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.3rem;
+    }
+    
+    .nav-icon:hover {
+      color: #ff7675;
+      transform: translateY(-2px);
+    }
+    
+    .icon-label {
+      display: none;
+      font-size: 0.75rem;
+      margin-left: 0.3rem;
+    }
+    
+    /* Cart Badge */
+    .cart-icon {
+      position: relative;
+    }
+    
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      background: linear-gradient(135deg, #ff7675, #ff9f9e);
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    /* Profile Dropdown */
+    .profile-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .profile-icon {
+      font-size: 1.3rem;
+      color: #6c5ce7;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 0.3rem;
+    }
+    
+    .profile-icon:hover {
+      color: #ff7675;
+      transform: translateY(-2px);
+    }
+    
+    .dropdown-content {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      background: white;
+      min-width: 220px;
+      border-radius: 16px;
+      box-shadow: 0 12px 35px rgba(108, 92, 231, 0.15);
+      padding: 0.6rem 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      border: 1px solid #f0e4ff;
+    }
+    
+    .profile-dropdown:hover .dropdown-content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .dropdown-content a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 1.2rem;
+      text-decoration: none;
+      color: #4a5568;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    
+    .dropdown-content a i {
+      font-size: 1.1rem;
+      width: 22px;
+      color: #6c5ce7;
+      transition: all 0.2s ease;
+    }
+    
+    .dropdown-content a:hover {
+      background: #f8f4ff;
+      color: #6c5ce7;
+    }
+    
+    .dropdown-content a:hover i {
+      color: #ff7675;
+      transform: translateX(3px);
+    }
+    
+    .dropdown-divider {
+      margin: 0.5rem 0;
+      border: none;
+      border-top: 1px solid #f0e8ff;
+    }
+    
+    .logout-link {
+      color: #e74c3c !important;
+    }
+    
+    .logout-link i {
+      color: #e74c3c !important;
+    }
+    
+    .logout-link:hover {
+      background: #fff5f5 !important;
+      color: #c0392b !important;
+    }
+    
+     /* ========== RESPONSIVE DESIGN ========== */
+    @media (max-width: 1024px) {
+      .nav-container {
+        padding: 0.75rem 1.5rem;
+      }
+      
+      .nav-links {
+        gap: 1.5rem;
+      }
+      
+      .nav-icons {
+        gap: 1rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding-bottom: 70px;
+      }
+      
+      .nav-container {
+        padding: 0.8rem 1rem;
+      }
+      
+      /* Show Hamburger Menu */
+      .hamburger {
+        display: flex;
+      }
+      
+      /* Mobile Menu Styles */
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: left 0.3s ease;
+        z-index: 1000;
+        padding: 2rem;
+      }
+      
+      .nav-links.active {
+        left: 0;
+      }
+      
+      .nav-links li a {
+        font-size: 1.2rem;
+        padding: 0.5rem;
+      }
+      
+      /* Mobile Icons Bar */
+      .nav-icons {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: white;
+        justify-content: space-around;
+        padding: 0.8rem 1rem;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        z-index: 999;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        gap: 0;
+      }
+      
+      .nav-icons.active {
+        transform: translateY(0);
+      }
+      
+      .nav-icon {
+        flex-direction: column;
+        font-size: 1.2rem;
+        gap: 0.2rem;
+      }
+      
+      .icon-label {
+        display: block;
+        font-size: 0.7rem;
+      }
+      
+      .cart-badge {
+        top: -5px;
+        right: -5px;
+        width: 16px;
+        height: 16px;
+        font-size: 0.6rem;
+      }
+      
+      /* Profile Dropdown on Mobile */
+      .profile-dropdown {
+        position: static;
+      }
+      
+      .profile-icon {
+        flex-direction: column;
+      }
+      
+      .dropdown-content {
+        position: fixed;
+        background: white;
+        bottom: 70px;
+        right: 10px;
+        left: auto;
+        /* top: auto; */
+        min-width: 200px;
+        height: 220px;
+      }
+      
+      /* Hero Section Mobile */
+      .hero-section {
+        padding: 2rem 1rem;
+        border-radius: 0 0 1.5rem 1.5rem;
+      }
+      
+      .hero-title {
+        font-size: 2.2rem;
+      }
+      
+      .section-title {
+        font-size: 1.6rem;
+      }
+      
+      .product-img {
+        height: 200px;
+      }
+      
+      .products-wrapper {
+        padding: 0 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .logo-text {
+        font-size: 1.4rem;
+      }
+      
+      .logo-img {
+        height: 45px;
+      }
+      
+      .hero-title {
+        font-size: 1.8rem;
+      }
+      
+      .dropdown-content {
+        min-width: 180px;
+        bottom: 65px;
+      }
+      
+      .dropdown-content a {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+      }
+    }
+    
+    @media (min-width: 1200px) {
+      .nav-container {
+        padding: 0.75rem 2rem;
+      }
+      
+      .hero-title {
+        font-size: 3.5rem;
+      }
+    }
+    
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    
+    /* Focus Styles */
+    .nav-links li a:focus-visible,
+    .nav-icon:focus-visible,
+    .profile-icon:focus-visible,
+    .hamburger:focus-visible,
+    .btn-primary-custom:focus-visible,
+    .btn-outline-custom:focus-visible {
+      outline: 2px solid #6c5ce7;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+ <!-- ======================= NAVBAR ======================= -->
+<nav class="navbar">
+  <div class="nav-container">
+
+    <!-- Logo -->
+    <a href="/home" class="logo">
+      <img src="/images/brand.png" alt="VogueHub" class="logo-img">
+    </a>
+
+    <!-- Hamburger -->
+    <button class="hamburger" id="hamburgerBtn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Links -->
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/home">Home</a></li>
+      <li><a href="/home#products">Shop</a></li> <!-- ✅ FIXED -->
+      <li><a href="#">Trending</a></li>
+      <li><a href="#">New Arrivals</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+
+    <!-- Icons -->
+    <div class="nav-icons" id="navIcons">
+
+      <!-- Wishlist -->
+      <a href="/watchlist" class="nav-icon">
+        <i class="bi bi-heart"></i>
+        <span class="icon-label">Wishlist</span>
+      </a>
+
+      <!-- Cart -->
+      <a href="/cart/view" class="nav-icon cart-icon">
+        <i class="bi bi-bag"></i>
+        <span class="cart-badge" th:text="${cartCount}">0</span> <!-- ✅ DYNAMIC -->
+        <span class="icon-label">Cart</span>
+      </a>
+
+      <!-- Orders -->
+      <a href="/orders" class="nav-icon">
+        <i class="bi bi-box-seam"></i>
+        <span class="icon-label">Orders</span>
+      </a>
+
+      <!-- Profile -->
+      <div class="profile-dropdown">
+        <a href="#" class="profile-icon">
+          <i class="bi bi-person-circle"></i>
+          <span class="icon-label">Profile</span>
+        </a>
+
+        <div class="dropdown-content">
+          <a href="/profile">My Profile</a>
+          <a href="/orders">My Orders</a>
+          <a href="/watchlist">Wishlist</a>
+          <hr>
+          <a href="/logout" class="logout-link">Logout</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<!-- ======================= CART PAGE HEADER ======================= -->
+<div class="cart-hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <span class="badge mb-2 px-3 py-2 rounded-pill" style="background: rgba(108,92,231,0.12); color:#6c5ce7;"><i class="bi bi-cart-check-fill me-1"></i> Shopping Bag</span>
+        <h1 class="cart-title">Your Cart <i class="bi bi-bag-heart" style="font-size: 2rem; color:#ff7675;"></i></h1>
+        <p class="text-muted mt-2">Review your items and proceed to checkout. Free shipping on orders above ₹999!</p>
+      </div>
+      <div class="col-md-4 text-md-end mt-3 mt-md-0">
+        <a href="/home#products" class="continue-shopping"><i class="bi bi-arrow-left-short"></i> Continue Shopping</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= CART CONTENT (STATIC - NO JAVASCRIPT) ======================= -->
+<div class="container mb-5">
+  <div class="row g-4">
+    <!-- Cart Items Table -->
+    <div class="col-lg-8">
+      <div class="cart-table">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th style="width: 40%">Product</th>
+              <th style="width: 20%">Price</th>
+              <th style="width: 20%">Quantity</th>
+              <th style="width: 20%">Subtotal</th>
+            </tr>
+          </thead>
+         <tbody>
+
+<div th:if="${#lists.isEmpty(products)}">
+    Cart is empty
+</div>
+
+<tr th:each="p : ${products}">
+  
+  <!-- PRODUCT -->
+  <td>
+    <div class="d-flex align-items-center gap-3">
+      <img th:src="${p.image}" class="product-img-cart">
+      <div>
+        <div class="product-name-cart" th:text="${p.name}"></div>
+        <a th:href="@{'/cart/remove/' + ${p.id}}" class="remove-link">
+          Remove
+        </a>
+      </div>
+    </div>
+  </td>
+
+  <!-- PRICE -->
+  <td>
+    <span class="price-cart">₹<span th:text="${p.price}"></span></span>
+  </td>
+
+  <!-- QUANTITY -->
+  <td>
+    <div class="quantity-control">
+      
+      <a th:href="@{'/cart/update/' + ${p.id} + '?action=dec'}" class="quantity-btn">−</a>
+
+      <span class="quantity-number"
+            th:text="${quantities[p.id]}"></span>
+
+      <a th:href="@{'/cart/update/' + ${p.id} + '?action=inc'}" class="quantity-btn">+</a>
+
+    </div>
+  </td>
+
+  <!-- SUBTOTAL -->
+  <td>
+    ₹<span th:text="${p.price * quantities[p.id]}"></span>
+  </td>
+
+</tr>
+
+</tbody>
+        </table>
+      </div>
+      
+      <!-- Cart Action Links (static) -->
+      <div class="d-flex justify-content-between align-items-center mt-4 flex-wrap gap-3">
+        <a href="/home#products" class="continue-shopping"><i class="bi bi-arrow-left"></i> Continue Shopping</a>
+        <div class="d-flex gap-3">
+          <a href="/cart/clear" class="remove-link" style="color:#ff7675; font-weight: 500;"><i class="bi bi-trash"></i> Clear Cart</a>
+          <a href="/cart/update-coupon" class="text-decoration-none" style="color:#6c5ce7;"><i class="bi bi-tag"></i> Apply Coupon</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Order Summary Sidebar -->
+    <div class="col-lg-4">
+      <div class="summary-card">
+        <h3 class="summary-title">Order Summary</h3>
+        
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span class="text-success">Free</span>
+        </div>
+        <div class="summary-row">
+  <span>Discount</span>
+  <span class="text-danger">
+    - ₹<span th:text="${discountAmount}"></span>
+  </span>
+</div>
+
+<div class="summary-total d-flex justify-content-between">
+  <span>Total</span>
+  <span class="fs-4 fw-bold">
+  ₹<span th:text="${finalTotal}"></span>
+</span>
+</div>
+        
+        <!-- Coupon Code Section (static) -->
+        <div class="mt-4">
+          <label class="form-label fw-semibold small text-muted">Gift card / Promo code</label>
+          <div class="d-flex gap-2">
+            <input type="text" class="form-control coupon-input" placeholder="Enter code" value="VOGUE10">
+            <a href="/cart/apply?code=VOGUE10" class="apply-btn text-decoration-none">Apply</a>
+          </div>
+          <div class="mt-2 small text-muted"><i class="bi bi-info-circle"></i> Use "VOGUE10" for 10% off (demo)</div>
+        </div>
+        
+        <!-- Checkout Button (static link) -->
+        <a href="/checkout" class="checkout-btn">
+          Proceed to Checkout <i class="bi bi-arrow-right-short"></i>
+        </a>
+        
+        <!-- Secure payment badges -->
+        <div class="text-center mt-4 pt-2">
+          <i class="bi bi-shield-check fs-5 me-2" style="color:#6c5ce7;"></i>
+          <span class="small text-muted">Secure payment • 100% protected</span>
+          <div class="mt-2">
+            <i class="bi bi-credit-card me-2" style="color:#ff7675;"></i>
+            <i class="bi bi-paypal me-2" style="color:#ff7675;"></i>
+            <i class="bi bi-upc-scan" style="color:#ff7675;"></i>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Recommended Section (static) -->
+      <div class="mt-4 p-3 bg-white rounded-4 border" style="border-color: #f0e4ff !important;">
+        <h6 class="fw-bold mb-2"><i class="bi bi-lightbulb"></i> Complete your look</h6>
+        <div class="d-flex gap-2 align-items-center">
+          <img src="https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop" width="50" height="50" style="border-radius: 12px;" alt="Denim Jacket">
+          <div class="flex-grow-1">
+            <div class="small fw-semibold">Slim Fit Denim Jacket</div>
+            <div class="small text-muted">₹2,999</div>
+          </div>
+          <a href="/cart/add/5" class="btn-sm btn-primary-custom px-3 py-1 text-decoration-none" style="font-size: 0.7rem;">Add</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Trust Badges Section -->
+  <div class="row mt-5 g-3 text-center">
+    <div class="col-md-3 col-6">
+      <i class="bi bi-truck fs-3" style="color:#6c5ce7;"></i>
+      <p class="small mt-1 mb-0 text-muted">Free Shipping</p>
+      <span class="small">on orders ₹999+</span>
+    </div>
+    <div class="col-md-3 col-6">
+      <i class="bi bi-arrow-return-left fs-3" style="color:#6c5ce7;"></i>
+      <p class="small mt-1 mb-0 text-muted">Easy Returns</p>
+      <span class="small">30 days policy</span>
+    </div>
+    <div class="col-md-3 col-6">
+      <i class="bi bi-shield-lock fs-3" style="color:#6c5ce7;"></i>
+      <p class="small mt-1 mb-0 text-muted">Secure Payment</p>
+      <span class="small">SSL encrypted</span>
+    </div>
+    <div class="col-md-3 col-6">
+      <i class="bi bi-headset fs-3" style="color:#6c5ce7;"></i>
+      <p class="small mt-1 mb-0 text-muted">24/7 Support</p>
+      <span class="small">Chat with us</span>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= FOOTER ======================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <h5 class="mb-3" style="color: #ff7675; font-weight: 700;">VogueHub</h5>
+        <p style="color: #b9b5d4;">Your ultimate destination for curated fashion, timeless accessories, and trend-forward styles.</p>
+        <div class="d-flex gap-3 mt-3">
+          <i class="bi bi-instagram fs-5" style="cursor: pointer; color:#ff7675;"></i>
+          <i class="bi bi-twitter-x fs-5" style="cursor: pointer; color:#ff7675;"></i>
+          <i class="bi bi-facebook fs-5" style="cursor: pointer; color:#ff7675;"></i>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <h6 style="color: #ff7675;">Shop</h6>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">Women</a></li>
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">Men</a></li>
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">Accessories</a></li>
+        </ul>
+      </div>
+      <div class="col-md-2">
+        <h6 style="color: #ff7675;">Support</h6>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">FAQs</a></li>
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">Returns</a></li>
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">Shipping</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h6 style="color: #ff7675;">Get 20% off</h6>
+        <div class="input-group mt-2">
+          <input type="email" class="form-control rounded-pill rounded-end-0" placeholder="Your email">
+          <button class="btn rounded-pill rounded-start-0" style="background: linear-gradient(135deg, #6c5ce7, #ff7675); color:white;">Subscribe</button>
+        </div>
+      </div>
+    </div>
+    <hr class="mt-4" style="background: #4a3f6e;">
+    <div class="text-center small">© 2025 VogueHub — Fashion for the fearless</div>
+  </div>
+</footer>
+
+<!-- Bootstrap JS only for responsive navbar toggle (no cart JS logic) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+//Hamburger Menu Toggle
+const hamburger = document.getElementById("hamburgerBtn");
+const navLinks = document.getElementById("navLinks");
+const navIcons = document.getElementById("navIcons");
+
+if (hamburger) {
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    navLinks.classList.toggle("active");
+    navIcons.classList.toggle("active");
+  });
+}
+
+// Close menu when clicking on a link
+document.querySelectorAll('.nav-links a, .nav-icons a:not(.profile-dropdown a)').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    navLinks.classList.remove('active');
+    navIcons.classList.remove('active');
+  });
+});
+</script>
+<!-- No custom JavaScript for cart functionality - pure static HTML/CSS -->
+</body>
+</html>

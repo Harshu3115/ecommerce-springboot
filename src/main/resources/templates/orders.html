@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>My Orders | VogueHub</title>
+  <link rel="icon" type="image/png" href="/images/favicon2.png">
+  <!-- Bootstrap 5 CSS + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #faf5ff 0%, #fff5f5 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    :root {
+      --primary-purple: #6c5ce7;
+      --primary-dark: #5a4bcf;
+      --coral: #ff7675;
+      --success-green: #00b894;
+      --warning-orange: #f39c12;
+    }
+    /* Navbar */
+     
+    /* ========== NAVBAR STYLES ========== */
+    /* ========== NAVBAR STYLES ========== */
+    .navbar {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 25px rgba(108, 92, 231, 0.08);
+      
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      padding: 0;
+    }
+    
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      position: relative;
+    }
+    
+    /* Logo */
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+      z-index: 1001;
+    }
+    
+    .logo:hover {
+      transform: scale(1.02);
+    }
+    
+    .logo-img {
+      height: 55px;
+      width: auto;
+      object-fit: contain;
+    }
+    
+    .logo-text {
+      font-weight: 800;
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    
+    /* Hamburger Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+      padding: 0;
+    }
+    
+    .hamburger span {
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+    
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+    }
+    
+    /* Navigation Links */
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-links li a {
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #4a5568;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 0.5rem 0;
+      display: inline-block;
+    }
+    
+    .nav-links li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+    
+    .nav-links li a:hover {
+      color: #6c5ce7;
+    }
+    
+    .nav-links li a:hover::after {
+      width: 100%;
+    }
+    
+    /* Right Side Icons */
+    .nav-icons {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-icon {
+      position: relative;
+      font-size: 1.3rem;
+      color: #6c5ce7;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.3rem;
+    }
+    
+    .nav-icon:hover {
+      color: #ff7675;
+      transform: translateY(-2px);
+    }
+    
+    .icon-label {
+      display: none;
+      font-size: 0.75rem;
+      margin-left: 0.3rem;
+    }
+    
+    /* Cart Badge */
+    .cart-icon {
+      position: relative;
+    }
+    
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      background: linear-gradient(135deg, #ff7675, #ff9f9e);
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    /* Profile Dropdown */
+    .profile-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .profile-icon {
+      font-size: 1.3rem;
+      color: #6c5ce7;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 0.3rem;
+    }
+    
+    .profile-icon:hover {
+      color: #ff7675;
+      transform: translateY(-2px);
+    }
+    
+    .dropdown-content {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      background: white;
+      min-width: 220px;
+      border-radius: 16px;
+      box-shadow: 0 12px 35px rgba(108, 92, 231, 0.15);
+      padding: 0.6rem 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      border: 1px solid #f0e4ff;
+    }
+    
+    .profile-dropdown:hover .dropdown-content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .dropdown-content a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 1.2rem;
+      text-decoration: none;
+      color: #4a5568;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    
+    .dropdown-content a i {
+      font-size: 1.1rem;
+      width: 22px;
+      color: #6c5ce7;
+      transition: all 0.2s ease;
+    }
+    
+    .dropdown-content a:hover {
+      background: #f8f4ff;
+      color: #6c5ce7;
+    }
+    
+    .dropdown-content a:hover i {
+      color: #ff7675;
+      transform: translateX(3px);
+    }
+    
+    .dropdown-divider {
+      margin: 0.5rem 0;
+      border: none;
+      border-top: 1px solid #f0e8ff;
+    }
+    
+    .logout-link {
+      color: #e74c3c !important;
+    }
+    
+    .logout-link i {
+      color: #e74c3c !important;
+    }
+    
+    .logout-link:hover {
+      background: #fff5f5 !important;
+      color: #c0392b !important;
+    }
+    
+    
+     /* ========== RESPONSIVE DESIGN ========== */
+    @media (max-width: 1024px) {
+      .nav-container {
+        padding: 0.75rem 1.5rem;
+      }
+      
+      .nav-links {
+        gap: 1.5rem;
+      }
+      
+      .nav-icons {
+        gap: 1rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding-bottom: 70px;
+      }
+      
+      .nav-container {
+        padding: 0.8rem 1rem;
+      }
+      
+      /* Show Hamburger Menu */
+      .hamburger {
+        display: flex;
+      }
+      
+      /* Mobile Menu Styles */
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: left 0.3s ease;
+        z-index: 1000;
+        padding: 2rem;
+      }
+      
+      .nav-links.active {
+        left: 0;
+      }
+      
+      .nav-links li a {
+        font-size: 1.2rem;
+        padding: 0.5rem;
+      }
+      
+      /* Mobile Icons Bar */
+      .nav-icons {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: white;
+        justify-content: space-around;
+        padding: 0.8rem 1rem;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        z-index: 999;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+        gap: 0;
+      }
+      
+      .nav-icons.active {
+        transform: translateY(0);
+      }
+      
+      .nav-icon {
+        flex-direction: column;
+        font-size: 1.2rem;
+        gap: 0.2rem;
+      }
+      
+      .icon-label {
+        display: block;
+        font-size: 0.7rem;
+      }
+      
+      .cart-badge {
+        top: -5px;
+        right: -5px;
+        width: 16px;
+        height: 16px;
+        font-size: 0.6rem;
+      }
+      
+      /* Profile Dropdown on Mobile */
+      .profile-dropdown {
+        position: static;
+      }
+      
+      .profile-icon {
+        flex-direction: column;
+      }
+      
+      .dropdown-content {
+        position: fixed;
+        background: white;
+        bottom: 70px;
+        right: 10px;
+        left: auto;
+        /* top: auto; */
+        min-width: 200px;
+        height: 220px;
+      }
+      
+      /* Hero Section Mobile */
+      .hero-section {
+        padding: 2rem 1rem;
+        border-radius: 0 0 1.5rem 1.5rem;
+      }
+      
+      .hero-title {
+        font-size: 2.2rem;
+      }
+      
+      .section-title {
+        font-size: 1.6rem;
+      }
+      
+      .product-img {
+        height: 200px;
+      }
+      
+      .products-wrapper {
+        padding: 0 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .logo-text {
+        font-size: 1.4rem;
+      }
+      
+      .logo-img {
+        height: 45px;
+      }
+      
+      .hero-title {
+        font-size: 1.8rem;
+      }
+      
+      .dropdown-content {
+        min-width: 180px;
+        bottom: 65px;
+      }
+      
+      .dropdown-content a {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+      }
+    }
+    
+    @media (min-width: 1200px) {
+      .nav-container {
+        padding: 0.75rem 2rem;
+      }
+      
+      .hero-title {
+        font-size: 3.5rem;
+      }
+    }
+    
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    
+    /* Focus Styles */
+    .nav-links li a:focus-visible,
+    .nav-icon:focus-visible,
+    .profile-icon:focus-visible,
+    .hamburger:focus-visible,
+    .btn-primary-custom:focus-visible,
+    .btn-outline-custom:focus-visible {
+      outline: 2px solid #6c5ce7;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+    
+    
+    
+    .cart-badge {
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      color: white;
+      border-radius: 30px;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin-left: 5px;
+    }
+    /* Orders Header */
+    .orders-header {
+      background: linear-gradient(120deg, #fff5f0 0%, #f8f0ff 100%);
+      border-radius: 0 0 2rem 2rem;
+      padding: 2rem 1rem;
+      margin-bottom: 2rem;
+    }
+    .orders-title {
+      font-weight: 800;
+      font-size: 2rem;
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    /* Order Card */
+    .order-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 5px 20px rgba(108, 92, 231, 0.08);
+      border: 1px solid #f0e4ff;
+      transition: all 0.3s;
+    }
+    .order-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(108, 92, 231, 0.12);
+    }
+    /* Order Header */
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #f0e8ff;
+      margin-bottom: 1rem;
+    }
+    .order-id {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #1e293b;
+    }
+    .order-id small {
+      font-weight: 400;
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+    .order-date {
+      font-size: 0.85rem;
+      color: #6c5ce7;
+    }
+    .order-status {
+      padding: 0.25rem 1rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-block;
+    }
+    .status-delivered {
+      background: #e8f5e9;
+      color: #00b894;
+    }
+    .status-shipped {
+      background: #e3f2fd;
+      color: #2196f3;
+    }
+    .status-processing {
+      background: #fff3e0;
+      color: #f39c12;
+    }
+    .status-cancelled {
+      background: #ffebee;
+      color: #e74c3c;
+    }
+    /* Order Items */
+    .order-items {
+      margin-bottom: 1rem;
+    }
+    .order-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #f8f0ff;
+    }
+    .order-item:last-child {
+      border-bottom: none;
+    }
+    .order-item-img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+    .order-item-details {
+      flex: 1;
+    }
+    .order-item-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #1e293b;
+      margin-bottom: 0.2rem;
+    }
+    .order-item-meta {
+      font-size: 0.7rem;
+      color: #94a3b8;
+    }
+    .order-item-price {
+      font-weight: 700;
+      color: #e65c1e;
+      font-size: 0.85rem;
+    }
+    /* Order Footer */
+    .order-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding-top: 1rem;
+      border-top: 1px solid #f0e8ff;
+      margin-top: 0.5rem;
+    }
+    .order-total {
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #e65c1e;
+    }
+    .order-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .btn-sm-custom {
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+    .btn-track {
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      color: white;
+      border: none;
+    }
+    .btn-track:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+      color: white;
+    }
+    .btn-reorder {
+      background: white;
+      border: 1px solid #6c5ce7;
+      color: #6c5ce7;
+    }
+    .btn-reorder:hover {
+      background: #6c5ce7;
+      color: white;
+    }
+    .btn-review {
+      background: white;
+      border: 1px solid #ff7675;
+      color: #ff7675;
+    }
+    .btn-review:hover {
+      background: #ff7675;
+      color: white;
+    }
+    /* Filters */
+    .filter-section {
+      background: white;
+      border-radius: 60px;
+      padding: 0.3rem;
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .filter-chip {
+      background: #f4edfc;
+      border-radius: 50px;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #6c5ce7;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .filter-chip.active {
+      background: linear-gradient(135deg, #6c5ce7, #ff7675);
+      color: white;
+      pointer-events: none;
+    }
+    .filter-chip:hover:not(.active) {
+      background: #e3d5ff;
+      transform: translateY(-2px);
+    }
+    /* Empty State */
+    .empty-orders {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: white;
+      border-radius: 2rem;
+      box-shadow: 0 10px 30px rgba(108, 92, 231, 0.08);
+    }
+    /* Footer */
+    .footer {
+      background: linear-gradient(135deg, #2d2b3a, #1e1b2a);
+      color: #e2e0f0;
+      margin-top: 4rem;
+      padding: 3rem 0 2rem;
+      width: 100%;
+    }
+    @media (max-width: 768px) {
+      .orders-title {
+        font-size: 1.6rem;
+      }
+      .order-header {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .order-footer {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+      .filter-section {
+        border-radius: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======================= NAVBAR ======================= -->
+<nav class="navbar">
+  <div class="nav-container">
+
+    <!-- Logo -->
+    <a href="/home" class="logo">
+      <img src="/images/brand.png" alt="VogueHub" class="logo-img">
+    </a>
+
+    <!-- Hamburger -->
+    <button class="hamburger" id="hamburgerBtn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Links -->
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/home">Home</a></li>
+      <li><a href="/home#products">Shop</a></li> <!-- ✅ FIXED -->
+      <li><a href="#">Trending</a></li>
+      <li><a href="#">New Arrivals</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+
+    <!-- Icons -->
+    <div class="nav-icons" id="navIcons">
+
+      <!-- Wishlist -->
+      <a href="/watchlist" class="nav-icon">
+        <i class="bi bi-heart"></i>
+        <span class="icon-label">Wishlist</span>
+      </a>
+
+      <!-- Cart -->
+      <a href="/cart/view" class="nav-icon cart-icon">
+        <i class="bi bi-bag"></i>
+        <span class="cart-badge" th:text="${cartCount}">0</span> <!-- ✅ DYNAMIC -->
+        <span class="icon-label">Cart</span>
+      </a>
+
+      <!-- Orders -->
+      <a href="/orders" class="nav-icon">
+        <i class="bi bi-box-seam"></i>
+        <span class="icon-label">Orders</span>
+      </a>
+
+      <!-- Profile -->
+      <div class="profile-dropdown">
+        <a href="#" class="profile-icon">
+          <i class="bi bi-person-circle"></i>
+          <span class="icon-label">Profile</span>
+        </a>
+
+        <div class="dropdown-content">
+          <a href="/profile">My Profile</a>
+          <a href="/orders">My Orders</a>
+          <a href="/watchlist">Wishlist</a>
+          <hr>
+          <a href="/logout" class="logout-link">Logout</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<!-- Orders Header -->
+<div class="orders-header">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <span class="badge mb-2 px-3 py-2 rounded-pill" style="background: rgba(108,92,231,0.12); color:#6c5ce7;">
+          <i class="bi bi-box-seam me-1"></i> Order History
+        </span>
+        <h1 class="orders-title">My Orders</h1>
+        <p class="text-muted mt-2">Track, manage, and reorder your favorite items</p>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- Orders List -->
+<div class="container mb-5">
+  
+
+  
+  <!-- DYNAMIC ORDERS -->
+
+<div th:if="${#lists.isEmpty(orders)}" class="empty-orders">
+  <h4>No Orders Found 😢</h4>
+  <p>Start shopping now!</p>
+  <a href="/shop" class="btn btn-primary">Shop Now</a>
+</div>
+
+<div th:each="o : ${orders}" class="order-card">
+
+  <div class="order-header">
+    <div>
+      <div class="order-id">
+        Order #<span th:text="${o.orderId}"></span>
+        <small>
+          Placed on 
+          <span th:text="${#temporals.format(o.date, 'dd MMM yyyy')}"></span>
+        </small>
+      </div>
+    </div>
+
+    <div>
+      <span class="order-status status-processing">
+        <i class="bi bi-hourglass-split"></i>
+        <span th:text="${o.paymentMethod}"></span>
+      </span>
+    </div>
+  </div>
+
+  <div class="order-items">
+    <div class="order-item">
+      <div class="order-item-details">
+        <div class="order-item-name">Order Placed</div>
+        <div class="order-item-meta">
+          Transaction ID: 
+          <span th:text="${o.transactionId}"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="order-footer">
+    <div class="order-total">
+      Total: ₹<span th:text="${o.amount}"></span>
+    </div>
+
+    <div class="order-actions">
+      <a href="#" class="btn-sm-custom btn-track">
+        <i class="bi bi-truck"></i> Track
+      </a>
+    </div>
+  </div>
+
+</div>
+  
+  <!-- Order Summary Stats -->
+  <div class="row mt-4 g-3">
+
+  <!-- Total Orders -->
+  <div class="col-md-3 col-6">
+    <div class="bg-white rounded-4 p-3 text-center border">
+      <h3 class="fw-bold mb-0" style="color: #6c5ce7;"
+          th:text="${totalOrders}"></h3>
+      <p class="small text-muted mb-0">Total Orders</p>
+    </div>
+  </div>
+
+  <!-- Delivered -->
+  <div class="col-md-3 col-6">
+    <div class="bg-white rounded-4 p-3 text-center border">
+      <h3 class="fw-bold mb-0" style="color: #00b894;"
+          th:text="${delivered}"></h3>
+      <p class="small text-muted mb-0">Delivered</p>
+    </div>
+  </div>
+
+  <!-- In Transit -->
+  <div class="col-md-3 col-6">
+    <div class="bg-white rounded-4 p-3 text-center border">
+      <h3 class="fw-bold mb-0" style="color: #2196f3;"
+          th:text="${inTransit}"></h3>
+      <p class="small text-muted mb-0">In Transit</p>
+    </div>
+  </div>
+
+  <!-- Total Spent -->
+  <div class="col-md-3 col-6">
+    <div class="bg-white rounded-4 p-3 text-center border">
+      <h3 class="fw-bold mb-0" style="color: #ff7675;">
+        ₹<span th:text="${totalSpent}"></span>
+      </h3>
+      <p class="small text-muted mb-0">Total Spent</p>
+    </div>
+  </div>
+
+</div>
+  
+  <!-- Need Help Section -->
+  <div class="mt-4 p-4 bg-white rounded-4 text-center border" style="border-color: #f0e4ff !important;">
+    <i class="bi bi-headset fs-2" style="color: #6c5ce7;"></i>
+    <h6 class="fw-bold mt-2">Need Help With Your Order?</h6>
+    <p class="small text-muted">Have questions about delivery, returns, or exchanges? Our support team is here to help.</p>
+    <a href="/support" class="btn-outline-custom" style="display: inline-block; padding: 0.5rem 1.5rem; border: 2px solid #6c5ce7; border-radius: 50px; color: #6c5ce7; text-decoration: none; font-weight: 600;">
+      Contact Support
+    </a>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container-fluid px-5">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <h5 class="mb-3" style="color: #ff7675; font-weight: 700;">VogueHub</h5>
+        <p style="color: #b9b5d4;">Your ultimate destination for curated fashion, timeless accessories, and trend-forward styles.</p>
+        <div class="d-flex gap-3 mt-3">
+          <i class="bi bi-instagram fs-5" style="cursor: pointer; color:#ff7675;"></i>
+          <i class="bi bi-twitter-x fs-5" style="cursor: pointer; color:#ff7675;"></i>
+          <i class="bi bi-facebook fs-5" style="cursor: pointer; color:#ff7675;"></i>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <h6 style="color: #ff7675;">Shop</h6>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">Women</a></li>
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">Men</a></li>
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">Accessories</a></li>
+        </ul>
+      </div>
+      <div class="col-md-2">
+        <h6 style="color: #ff7675;">Support</h6>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">FAQs</a></li>
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">Returns</a></li>
+          <li><a href="#" class="text-decoration-none" style="color:#b9b5d4;">Shipping</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h6 style="color: #ff7675;">Get 20% off</h6>
+        <div class="input-group mt-2">
+          <input type="email" class="form-control rounded-pill rounded-end-0" placeholder="Your email">
+          <button class="btn rounded-pill rounded-start-0" style="background: linear-gradient(135deg, #6c5ce7, #ff7675); color:white;">Subscribe</button>
+        </div>
+      </div>
+    </div>
+    <hr class="mt-4" style="background: #4a3f6e;">
+    <div class="text-center small">© 2025 VogueHub — Fashion for the fearless</div>
+  </div>
+</footer>
+
+<!-- Bootstrap JS only for responsive navbar toggle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- No custom JavaScript - pure static orders page -->
+
+<script>
+//Hamburger Menu Toggle
+const hamburger = document.getElementById("hamburgerBtn");
+const navLinks = document.getElementById("navLinks");
+const navIcons = document.getElementById("navIcons");
+
+if (hamburger) {
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.toggle("active");
+    navLinks.classList.toggle("active");
+    navIcons.classList.toggle("active");
+  });
+}
+
+// Close menu when clicking on a link
+document.querySelectorAll('.nav-links a, .nav-icons a:not(.profile-dropdown a)').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    navLinks.classList.remove('active');
+    navIcons.classList.remove('active');
+  });
+});
+
+</script>
+</body>
+</html>

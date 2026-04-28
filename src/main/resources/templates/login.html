@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login Page | VogueHub</title>
+
+  <link rel="icon" type="image/png" href="/favicon2.png">
+  <link rel="shortcut icon" href="/images/favicon2.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to right, #e0eafc, #cfdef3);
+    }
+
+    .login-card {
+        width: 350px;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        text-align: center;
+        animation: fadeIn 0.5s ease;
+    }
+    
+    
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+.icon {
+    width: 340px;
+    margin:auto;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+}
+
+/* Image styling */
+.icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* keeps logo proper */
+}
+
+@media (max-width: 768px) {
+    .icon {
+        width: 380px;
+        height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .icon {
+        width: 380px;
+        height: 80px;
+    }
+}
+
+    h2 {
+        margin-top: 15px;
+        font-size: 22px;
+        color: #333;
+    }
+
+    p {
+        font-size: 14px;
+        color: gray;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        text-align: left;
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-size: 14px;
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: #555;
+    }
+
+    /* Password input with eye icon */
+    .password-wrapper {
+        position: relative;
+    }
+
+    .password-wrapper input {
+        width: 100%;
+        padding: 10px;
+        padding-right: 40px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        outline: none;
+        transition: all 0.3s;
+    }
+
+    .password-wrapper input:focus {
+        border-color: #4a6cf7;
+        box-shadow: 0 0 0 2px rgba(74,108,247,0.1);
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #999;
+        background: transparent;
+        border: none;
+        font-size: 16px;
+        transition: color 0.3s;
+    }
+
+    .toggle-password:hover {
+        color: #4a6cf7;
+    }
+
+    /* Regular email input */
+    input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        outline: none;
+        transition: all 0.3s;
+    }
+
+    input[type="email"]:focus {
+        border-color: #4a6cf7;
+        box-shadow: 0 0 0 2px rgba(74,108,247,0.1);
+    }
+
+    .forgot {
+        text-align: right;
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+
+    .forgot a {
+        color: #4a6cf7;
+        text-decoration: none;
+    }
+
+    .forgot a:hover {
+        text-decoration: underline;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(to right, #4a6cf7, #9333ea);
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .btn:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+        box-shadow: 0 5px 15px rgba(74,108,247,0.3);
+    }
+
+    .divider {
+        margin: 20px 0;
+        font-size: 14px;
+        color: gray;
+        position: relative;
+    }
+    
+    .divider::before,
+    .divider::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 30%;
+        height: 1px;
+        background: #e0e0e0;
+    }
+    
+    .divider::before {
+        left: 0;
+    }
+    
+    .divider::after {
+        right: 0;
+    }
+    
+    .divider span {
+        background: white;
+        padding: 0 10px;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .login-sec{
+    right: 25px;
+    position: relative;
+    }
+
+    .create-btn {
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        background: white;
+        cursor: pointer;
+        color: #333;
+        transition: all 0.3s;
+    }
+
+    .create-btn:hover {
+        border-color: #4a6cf7;
+        background: #f8f9ff;
+    }
+
+    .footer {
+        margin-top: 15px;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .footer a {
+        color: #4a6cf7;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .footer a:hover {
+        text-decoration: underline;
+    }
+    
+    /* Success Popup - Green Box */
+    .success-popup {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        padding: 14px 20px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 10px 25px rgba(16,185,129,0.3);
+        z-index: 10000;
+        animation: slideInRight 0.3s ease;
+        font-weight: 500;
+        font-size: 14px;
+    }
+    
+    .success-popup i {
+        font-size: 18px;
+    }
+    
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    .popup-fade-out {
+        animation: fadeOut 0.3s ease forwards;
+    }
+    
+    @keyframes fadeOut {
+        to {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+    }
+</style>
+</head>
+
+<body>
+
+
+
+    <div class="login-card">
+    <div class="login-sec">
+    
+    <div class="icon">
+    <img src="/images/brand.png" alt="VogueHub" height="50">
+    </div>
+    
+ </div>
+    	<h2>Welcome Back</h2>
+    <p>Sign in to continue shopping</p>
+    <p th:text="${error}" style="color:red;"></p>
+
+    <form id="loginForm" action="/login" method="post">
+
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="email" placeholder="Enter your email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <div class="password-wrapper">
+                <input type="password" id="password" placeholder="Enter your password" name="password" required>
+                <button type="button" class="toggle-password" onclick="togglePassword()">
+                    <i class="fa-regular fa-eye-slash" id="eyeIcon"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="forgot">
+            <a href="/user/forgot-password">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="btn">Sign In →</button>
+
+    </form>
+
+    <div class="divider">
+        <span>New to our store?</span>
+    </div>
+
+    <a href="/register" class="create-btn">Create Account</a>
+
+    <div class="footer">
+        Are you a seller? <a href="/seller/login">Login here</a>
+    </div>
+    </div>
+
+</div>
+
+<script>
+// Toggle password visibility
+function togglePassword() {
+    let passwordInput = document.getElementById('password');
+    let eyeIcon = document.getElementById('eyeIcon');
+    
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        eyeIcon.className = "fa-regular fa-eye";
+    } else {
+        passwordInput.type = "password";
+        eyeIcon.className = "fa-regular fa-eye-slash";
+    }
+}
+
+// Show green success popup
+function showSuccessPopup(message) {
+    // Remove any existing popup
+    let existingPopup = document.querySelector('.success-popup');
+    if (existingPopup) {
+        existingPopup.remove();
+    }
+    
+    // Create popup
+    let popup = document.createElement('div');
+    popup.className = 'success-popup';
+    popup.innerHTML = `
+        <i class="fa-solid fa-circle-check"></i>
+        <span>${message}</span>
+    `;
+    document.body.appendChild(popup);
+    
+    // Auto remove after 2.5 seconds
+    setTimeout(() => {
+        if (popup && popup.parentElement) {
+            popup.classList.add('popup-fade-out');
+            setTimeout(() => {
+                if (popup && popup.parentElement) popup.remove();
+            }, 300);
+        }
+    }, 2500);
+}
+
+// Validate email format
+function isValidEmail(email) {
+    let emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+
+
+
+</script>
+
+</body>
+</html>

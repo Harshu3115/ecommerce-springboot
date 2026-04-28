@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seller Registration | VogueHub</title>
+<link rel="icon" type="image/png" href="/images/favicon2.png">
+<link rel="shortcut icon" href="/favicon2.png">
+
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome 6 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+    --primary: #4a6cf7;
+    --secondary: #9333ea;
+    --text: #333;
+    --gray: #777;
+    --success: #10b981;
+    --error: #ef4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Card */
+.card-custom {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    padding: 32px 28px;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    animation: fadeIn 0.5s ease;
+    border: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Icon */
+.icon {
+    width: 280px;
+    margin: 0 auto 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.icon img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+@media (max-width: 480px) {
+    .icon {
+        width: 220px;
+    }
+    .card-custom {
+        padding: 24px 20px;
+    }
+}
+
+/* Title */
+h2 {
+    text-align: center;
+    margin-top: 5px;
+    color: var(--text);
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: var(--gray);
+    margin-bottom: 28px;
+}
+
+/* Seller Badge */
+.seller-badge {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    color: #b45309;
+    text-align: center;
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.seller-badge i {
+    font-size: 16px;
+}
+
+/* Form */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 13px;
+    margin-bottom: 6px;
+    display: block;
+    font-weight: 600;
+    color: #444;
+}
+
+/* Input with icon */
+.input-box {
+    position: relative;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 13px 45px 13px 45px;
+    border-radius: 12px;
+    border: 1.5px solid #e2e8f0;
+    outline: none;
+    transition: all 0.3s;
+    font-size: 14px;
+    background: #fafbfc;
+}
+
+.input-box input:focus {
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(74,108,247,0.1);
+}
+
+/* Left icon */
+.input-box .left-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 16px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Right icon (eye toggle) */
+.input-box .toggle-eye {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #94a3b8;
+    transition: color 0.3s;
+    z-index: 2;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: none;
+}
+
+.input-box .toggle-eye:hover {
+    color: var(--primary);
+}
+
+/* Button */
+.btn-custom {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.btn-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(74,108,247,0.3);
+    color: white;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.footer a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Divider */
+.divider {
+    text-align: center;
+    margin: 20px 0 12px;
+    font-size: 13px;
+    color: #aaa;
+    position: relative;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: #e2e8f0;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+.divider span {
+    background: white;
+    padding: 0 12px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Password strength */
+.password-strength {
+    font-size: 11px;
+    margin-top: 6px;
+    padding-left: 10px;
+    display: none;
+}
+
+.strength-weak { 
+    color: #ef4444; 
+}
+.strength-medium { 
+    color: #f59e0b; 
+}
+.strength-strong { 
+    color: #10b981; 
+}
+
+/* Error message */
+.error-message {
+    color: var(--error);
+    font-size: 11px;
+    margin-top: 5px;
+    display: none;
+    padding-left: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card-custom">
+    <div class="icon">
+        <img src="/images/brand.png" alt="VogueHub">
+    </div>
+
+    <h2>Seller Registration</h2>
+    <p class="subtitle">Start selling on VogueHub</p>
+
+    <!-- Seller Badge -->
+    <div class="seller-badge">
+        <i class="fa-solid fa-store"></i>
+        <span>Become a verified seller & reach millions of customers</span>
+    </div>
+
+    <form th:action="@{/seller/register}" method="post" th:object="${seller}">
+        
+        <!-- Store Name -->
+        <div class="form-group">
+            <label>Store Name <span class="text-danger">*</span></label>
+            <div class="input-box">
+                <i class="fa-solid fa-shop left-icon"></i>
+                <input type="text" th:field="*{storeName}" name="storeName" id="storeName" placeholder="Enter your store/business name" required>
+            </div>
+        </div>
+
+        <!-- Full Name -->
+        <div class="form-group">
+            <label>Full Name <span class="text-danger">*</span></label>
+            <div class="input-box">
+                <i class="fa-regular fa-user left-icon"></i>
+                <input type="text" name="fullName" id="fullName" placeholder="Enter your full name" required>
+            </div>
+        </div>
+
+        <!-- Email Address -->
+        <div class="form-group">
+            <label>Email Address <span class="text-danger">*</span></label>
+            <div class="input-box">
+                <i class="fa-regular fa-envelope left-icon"></i>
+                <input type="email" th:field="*{email}" name="email" id="email" placeholder="Enter your email" required>
+            </div>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group">
+            <label>Phone Number <span class="text-danger">*</span></label>
+            <div class="input-box">
+                <i class="fa-solid fa-phone left-icon"></i>
+                <input type="tel" name="phone" id="phone" placeholder="Enter 10-digit mobile number" required pattern="[0-9]{10}">
+            </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <label>Password <span class="text-danger">*</span></label>
+            <div class="input-box">
+                <i class="fa-solid fa-lock left-icon"></i>
+                <input type="password" name="password" id="password" placeholder="Create password (min. 6 characters)" required>
+                <span class="toggle-eye" onclick="togglePassword('password')">
+                    <i class="fa-regular fa-eye-slash" id="passwordEye"></i>
+                </span>
+            </div>
+            <div class="password-strength" id="passwordStrength"></div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+            <label>Confirm Password <span class="text-danger">*</span></label>
+            <div class="input-box">
+                <i class="fa-solid fa-lock left-icon"></i>
+                <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                <span class="toggle-eye" onclick="togglePassword('confirmPassword')">
+                    <i class="fa-regular fa-eye-slash" id="confirmPasswordEye"></i>
+                </span>
+            </div>
+            <div class="error-message" id="passwordError">
+                <i class="fa-solid fa-circle-exclamation" style="font-size: 10px; margin-right: 4px;"></i> Passwords do not match
+            </div>
+        </div>
+
+        <!-- Terms Checkbox -->
+        <div class="checkbox" style="display: flex; align-items: center; gap: 10px; margin: 20px 0 10px;">
+            <input type="checkbox" id="termsCheck" required style="width: 16px; height: 16px; cursor: pointer; accent-color: var(--primary);">
+            <span style="font-size: 13px; color: #555;">I agree to the <a href="#" style="color: var(--primary); text-decoration: none;">Seller Terms</a> and <a href="#" style="color: var(--primary); text-decoration: none;">Privacy Policy</a></span>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-custom">
+            <i class="fa-solid fa-store"></i> Register as Seller
+        </button>
+
+    </form>
+
+    <div class="footer">
+        Already have a seller account? <a href="/seller/login">Sign In</a>
+    </div>
+
+    <div class="divider">
+        <span>Want to shop instead?</span>
+    </div>
+
+    <div class="footer">
+        <a href="/register">
+            <i class="fa-regular fa-user"></i> Create Customer Account
+        </a>
+    </div>
+
+</div>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// Toggle password visibility
+function togglePassword(id) {
+    let input = document.getElementById(id);
+    let eyeIcon = id === 'password' 
+        ? document.getElementById('passwordEye') 
+        : document.getElementById('confirmPasswordEye');
+    
+    if (input.type === "password") {
+        input.type = "text";
+        eyeIcon.className = "fa-regular fa-eye";
+    } else {
+        input.type = "password";
+        eyeIcon.className = "fa-regular fa-eye-slash";
+    }
+}
+
+// Password strength checker
+function checkPasswordStrength() {
+    let password = document.getElementById('password').value;
+    let strengthDiv = document.getElementById('passwordStrength');
+
+    if (password.length === 0) {
+        strengthDiv.style.display = 'none';
+        return;
+    }
+
+    strengthDiv.style.display = 'block';
+
+    let strength = 0;
+    if (password.length >= 6) strength++;
+    if (password.length >= 8) strength++;
+    if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+    if (password.match(/[0-9]/)) strength++;
+    if (password.match(/[^a-zA-Z0-9]/)) strength++;
+
+    if (strength <= 2) {
+        strengthDiv.innerHTML = 'Weak password';
+        strengthDiv.className = 'password-strength strength-weak';
+    } else if (strength <= 4) {
+        strengthDiv.innerHTML = 'Medium password';
+        strengthDiv.className = 'password-strength strength-medium';
+    } else {
+        strengthDiv.innerHTML = 'Strong password';
+        strengthDiv.className = 'password-strength strength-strong';
+    }
+}
+
+// Confirm password validation
+document.getElementById('confirmPassword').addEventListener('keyup', function() {
+    let password = document.getElementById('password').value;
+    let confirm = this.value;
+    let errorDiv = document.getElementById('passwordError');
+
+    if (confirm.length > 0 && password !== confirm) {
+        errorDiv.style.display = 'block';
+    } else {
+        errorDiv.style.display = 'none';
+    }
+});
+
+// Password strength trigger
+document.getElementById('password').addEventListener('keyup', checkPasswordStrength);
+
+// Phone number validation (only numbers, max 10 digits)
+document.getElementById('phone').addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+});
+</script>
+
+</body>
+</html>
